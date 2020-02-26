@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<link th:href="@{/css/city/style.css}" rel="stylesheet" type="text/css" />-->
+    <title>人员修改</title>
+    <script src="edit.html"></script>
+</head>
+<body>
+<form action="/knowledge/save" method="post">
+    <input type="text" id="id" name="id"  />
+    <label for="type1">类别：</label>
+    <input type="text" id="type1" name="type1"  /><br/>
+    <br/>
+    <label for="type2">子类：</label>
+    <input type="text" id="type2" name="type2" /><br/>
+    <input type="submit" value="提交">
+</form>
+<!--<script th:replace="fragscript :: outerJS"></script>-->
+</body>
+</html>
