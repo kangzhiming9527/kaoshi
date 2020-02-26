@@ -12,11 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TestController {
-        @RequestMapping("/view")
+    @RequestMapping("/view")
     public ModelAndView categorylist() {
 //        List<Category> list = categoryDao.findAll();
 
-        ModelAndView mav = new ModelAndView("test");
+        ModelAndView mav = new ModelAndView("index");
 //        mav.addObject("list", list);
         return mav;
     }

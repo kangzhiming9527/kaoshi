@@ -5,6 +5,7 @@ package com.bj.bean;
  * 2020/2/23 18:20
  * by kzm
  */
+
 import javax.persistence.*;
 
 // 建库建表
@@ -21,11 +22,12 @@ import javax.persistence.*;
 //SELECT * FROM category;
 @Entity
 @Table(name = "knowledge")
-public class Knowledge {
+public class Knowledge extends BaseBean {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     //知识点分类1
     @Column(name = "type1")
@@ -35,11 +37,11 @@ public class Knowledge {
     @Column(name = "type2")
     private String type2;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
