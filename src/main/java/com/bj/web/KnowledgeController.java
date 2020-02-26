@@ -19,16 +19,7 @@ public class KnowledgeController {
     @Autowired
     private KnowledgeService service;
 
-    @RequestMapping("/listView")
-    public String listView() {
-        return "list";
-    }
 
-    @RequestMapping("/listView2")
-    public ModelAndView listView2() {
-        ModelAndView mav = new ModelAndView("list");
-        return mav;
-    }
 
     /**
      * 列表页面
@@ -36,16 +27,10 @@ public class KnowledgeController {
      * @return
      */
     @RequestMapping("/list")
-    public ModelAndView list(@RequestParam(value = "start", defaultValue = "0") Integer start,
+    public String list(@RequestParam(value = "start", defaultValue = "0") Integer start,
                              @RequestParam(value = "limit", defaultValue = "10") Integer limit) {
-        start = start < 0 ? 0 : start;
-
-        Sort sort = new Sort(Sort.DEFAULT_DIRECTION, "id");
-        Pageable pageable = new PageRequest(start, limit, sort);
-        Page<Knowledge> page = service.list(pageable);
-        ModelAndView mav = new ModelAndView("knowledge/list");
-        mav.addObject("page", page);
-        return mav;
+        String result = "[]";
+        return result;
     }
 
     /**
