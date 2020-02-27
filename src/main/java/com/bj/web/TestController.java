@@ -2,7 +2,6 @@ package com.bj.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * TestController：
@@ -13,11 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
     @RequestMapping("/view")
-    public ModelAndView categorylist() {
-//        List<Category> list = categoryDao.findAll();
+    public String view() {
+        return "index";
+    }
 
-        ModelAndView mav = new ModelAndView("index");
-//        mav.addObject("list", list);
-        return mav;
+    @RequestMapping("/viewBak")
+    public String viewBak() {
+        return "indexBak";
     }
 }

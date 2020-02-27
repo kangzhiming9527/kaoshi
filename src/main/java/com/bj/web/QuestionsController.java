@@ -30,7 +30,7 @@ public class QuestionsController {
         start = start < 0 ? 0 : start;
 
         Sort sort = new Sort(Sort.DEFAULT_DIRECTION, "id");
-        Pageable pageable = new PageRequest(start, limit, sort);
+        Pageable pageable = PageRequest.of(start, limit, sort);
         Page<Questions> page = service.list(pageable);
         ModelAndView mav = new ModelAndView("questions/list");
         mav.addObject("page", page);

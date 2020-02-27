@@ -29,6 +29,10 @@ public class Knowledge extends BaseBean {
     @Column(name = "id")
     private Integer id;
 
+    //科目    0 数学 1 语文 2 英语
+    @Column(name = "type0")
+    private int type0;
+
     //知识点分类1
     @Column(name = "type1")
     private String type1;
@@ -36,6 +40,28 @@ public class Knowledge extends BaseBean {
     //知识点分类1
     @Column(name = "type2")
     private String type2;
+
+    public String getType0() {
+        String str = "未知";
+        switch (type0) {
+            case 0:
+                str = "数学";
+                break;
+            case 1:
+                str = "语文";
+                break;
+            case 2:
+                str = "英语";
+                break;
+            default:
+                break;
+        }
+        return str;
+    }
+
+    public void setType0(int type0) {
+        this.type0 = type0;
+    }
 
     public Integer getId() {
         return id;

@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/knowledge")
-public class KnowledgeController {
+public class KnowledgeController extends BaseController {
 
     @Autowired
     private KnowledgeService service;
-
 
 
     /**
@@ -27,22 +28,25 @@ public class KnowledgeController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(@RequestParam(value = "start", defaultValue = "0") Integer start,
-                             @RequestParam(value = "limit", defaultValue = "10") Integer limit) {
-        String result = "[]";
-        return result;
+    public String list(HttpServletResponse response,
+                       @RequestParam(value = "page", defaultValue = "1", required = false) Integer pageNum,
+                       @RequestParam(value = "limit", defaultValue = "10", required = false) Integer limit) {
+
+        try {
+            int start = (pageNum - 1) * limit;
+
+            Sort sort = new Sort(Sort.DEFAULT_DIRECTION, "id");
+            Pageable pageable = PageRequest.of(start, limit, sort);
+            Page<Knowledge> page = service.list(pageable);
+            sendJsonData(response, "0", "", page.getTotalElements(), page.getContent());
+        } catch (Exception e) {
+            sendJsonData(response, "-1", "", 0, null);
+        } finally {
+        }
+
+        return null;
     }
 
-    /**
-     * 类别新增视图
-     *
-     * @return
-     */
-    @RequestMapping("/add")
-    public ModelAndView add() {
-        ModelAndView mav = new ModelAndView("knowledge/add");
-        return mav;
-    }
 
     /**
      * 类别新增操作
@@ -51,9 +55,14 @@ public class KnowledgeController {
      * @return
      */
     @RequestMapping("/save")
-    public String save(Knowledge model) {
-        service.save(model);
-        return "redirect:list";
+    public String save(HttpServletResponse response,Knowledge model) {
+        Knowledge save = service.save(model);
+        if(save !=null){
+            sendJsonResult(response,"0",save.getId());
+        }else{
+            sendJsonResult(response,"-1",null);
+        }
+        return null;
     }
 
 //    /**
@@ -80,5 +89,12 @@ public class KnowledgeController {
         ModelAndView mav = new ModelAndView("knowledge/edit");
         mav.addObject("knowledge", model);
         return mav;
+    }
+
+    @RequestMapping("/getOne")
+    public String getOne(HttpServletResponse response,Integer id) {
+        Knowledge model = service.getOne(id);
+        sendJsonResult(response,"0",model);
+        return null;
     }
 }
