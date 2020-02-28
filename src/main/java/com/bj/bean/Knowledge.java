@@ -41,7 +41,11 @@ public class Knowledge extends BaseBean {
     @Column(name = "type2")
     private String type2;
 
-    public String getType0() {
+    public int getType0() {
+        return type0;
+    }
+
+    public String getType0Str() {
         String str = "未知";
         switch (type0) {
             case 0:

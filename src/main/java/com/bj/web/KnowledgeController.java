@@ -55,46 +55,53 @@ public class KnowledgeController extends BaseController {
      * @return
      */
     @RequestMapping("/save")
-    public String save(HttpServletResponse response,Knowledge model) {
-        Knowledge save = service.save(model);
-        if(save !=null){
-            sendJsonResult(response,"0",save.getId());
-        }else{
-            sendJsonResult(response,"-1",null);
+    public String save(HttpServletResponse response, Knowledge model) {
+        try {
+            Knowledge save = service.save(model);
+            if (save != null) {
+                sendJsonResult(response, "0", save.getId());
+            } else {
+                sendJsonResult(response, "-1", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-//    /**
-//     * 类别删除操作
-//     * @param id
-//     * @return
-//     */
-//    @RequestMapping("/del")
-//    public String categorydelete(Integer id) {
-//        personDao.deleteById(id);
-//        return "redirect:person/list";
-//    }
-
     /**
-     * 类别编辑视图
+     * 类别删除操作
      *
      * @param id
      * @return
      */
-    @RequestMapping("/edit")
-    public ModelAndView categoryedit(Integer id) {
-        Knowledge model = service.getOne(id);
-
-        ModelAndView mav = new ModelAndView("knowledge/edit");
-        mav.addObject("knowledge", model);
-        return mav;
+    @RequestMapping("/deleteById")
+    public String deleteById(HttpServletResponse response, Integer id) {
+        try {
+            service.deleteById(id);
+            sendJsonResult(response, "0", id);
+        } catch (Exception e) {
+            sendJsonResult(response, "-1", null);
+            e.printStackTrace();
+        }
+        return null;
     }
 
+    /**
+     * 获取单个对象
+     *
+     * @param response
+     * @param id
+     * @return
+     */
     @RequestMapping("/getOne")
-    public String getOne(HttpServletResponse response,Integer id) {
-        Knowledge model = service.getOne(id);
-        sendJsonResult(response,"0",model);
+    public String getOne(HttpServletResponse response, Integer id) {
+        try {
+            Knowledge model = service.getOne(id);
+            sendJsonResult(response, "0", model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

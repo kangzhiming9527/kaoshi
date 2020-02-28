@@ -43,4 +43,9 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     public Knowledge getOne(Integer id) {
         return dao.getOne(id);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        dao.deleteById(id);
+    }
 }

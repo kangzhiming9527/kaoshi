@@ -26,4 +26,6 @@ public interface KnowledgeService {
     Knowledge save(Knowledge model);
 
     Knowledge getOne(Integer id);
+
+    void deleteById(Integer id);
 }

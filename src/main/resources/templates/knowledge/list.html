@@ -17,34 +17,26 @@
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">文章ID</label>
+                    <label class="layui-form-label">科目</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="id" id="aaa" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">作者</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="author" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">标题</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="title" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">文章标签</label>
-                    <div class="layui-input-inline">
-                        <select name="label">
-                            <option value="">请选择标签</option>
-                            <option value="0">美食</option>
-                            <option value="1">新闻</option>
-                            <option value="2">八卦</option>
-                            <option value="3">体育</option>
-                            <option value="4">音乐</option>
+                        <select name="type0">
+                            <option value="">全部</option>
+                            <option value="0">数学</option>
+                            <!--<option value="1">语文</option>-->
+                            <!--<option value="2">英语</option>-->
                         </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">类别</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="type1" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">分类</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="type2" placeholder="请输入" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -59,7 +51,7 @@
             <div style="padding-bottom: 10px;">
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
             </div>
-            <table id="knowledgeList" lay-filter="knowledgeList"></table>
+            <table id="knowledgeList" lay-filter="dataTableFilter"></table>
             <script type="text/html" id="barOperation">
                 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
                         class="layui-icon layui-icon-edit"></i>编辑</a>
@@ -71,22 +63,55 @@
 </div>
 
 <script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-1.9.1.min.js"></script>
 <script>
     var table;
     var form;
     layui.use(['form', 'layer', 'table'], function () {
         table = layui.table;
-        // form = layui.form;
+        form = layui.form;
 
-        // //监听搜索
-        // form.on('submit(LAY-app-contlist-search)', function (data) {
-        //     var field = data.field;
-        //
-        //     //执行重载
-        //     table.reload('LAY-app-content-list', {
-        //         where: field
-        //     });
-        // });
+        //监听搜索
+        form.on('submit(LAY-app-contlist-search)', function (data) {
+            var field = data.field;
+console.log(field);
+            //执行重载
+            table.reload('knowledgeList', {
+                where: field
+            });
+        });
+
+        //监听工具条
+        table.on('tool(dataTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                layer.open({
+                    type: 2
+                    , title: '修改知识点'
+                    , content: 'edit.html?dataId='+data.id
+                    , maxmin: true
+                    , area: ['550px', '350px']
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#LAY-app-knowledge-submit");
+                        submit.click();
+                        queryList();
+                        layer.close(index);
+                    }
+                });
+                // parent.showWindows("查看出库单", "inpOutStore/outStoreInfo.jsp?outStoreLogID=" + data.outStoreLogID, "1064px", "756px");
+            }else if (obj.event === 'del'){
+                layer.confirm('您确定删除该条数据么!', {
+                    btn : [ '确定', '取消' ],
+                    yes : function (index) {
+                        del(data.id);
+                        queryList();
+                        layer.close(index);
+                    }
+                });
+            }
+        });
 
         var $ = layui.$, active = {
             add: function () {
@@ -101,6 +126,8 @@
                         //点击确认触发 iframe 内容中的按钮提交
                         var submit = layero.find('iframe').contents().find("#LAY-app-knowledge-submit");
                         submit.click();
+                        queryList();
+                        layer.close(index);
                     }
                 });
             }
@@ -119,12 +146,32 @@
             , url: '/knowledge/list'
             , cols: [[
                 { field: 'id',title: '编号', type: 'numbers'}
-                , {field: 'type0', title: '科目', sort: true}
+                , {field: 'type0Str', title: '科目', sort: true}
                 , {field: 'type1', title: '类别', sort: true}
                 , {field: 'type2', title: '分类', sort: true}
                 , {toolbar: '#barOperation', title: '操作'}
             ]]
             , page: true
+        });
+    }
+
+    function del(id){
+        $.ajax({
+            url: "/knowledge/deleteById",
+            dataType: "json",
+            type: "post",
+            //async: "true/false",是否异步
+            data: {id : id},
+            success: function (res) {
+                if (res != null && res.code == 0) {
+                    queryList();
+                    layer.msg("删除成功");
+                }else{
+                    layer.msg("删除失败");
+                }
+            },
+            error: function () {
+            }
         });
     }
 </script>

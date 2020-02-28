@@ -13,13 +13,14 @@
 
 <div class="layui-form" lay-filter="layuiadmin-form-order" id="layuiadmin-form-order" style="padding: 20px 30px 0 0;">
     <form>
+        <input name="id" type="hidden">
         <div class="layui-form-item">
             <label class="layui-form-label">科目</label>
             <div class="layui-input-inline">
                 <select name="type0">
                     <option value="0">数学</option>
-                    <option value="1">语文</option>
-                    <option value="2">英语</option>
+                    <!--<option value="1">语文</option>-->
+                    <!--<option value="2">英语</option>-->
                 </select>
             </div>
         </div>
@@ -46,6 +47,7 @@
 
 <script src="../../layui/layui.js"></script>
 <script src="../../js/jquery-1.9.1.min.js"></script>
+<script src="../../js/common.js"></script>
 <script>
     var form;
     var layer;
@@ -56,6 +58,10 @@
         layer = layui.layer;
         layedit = layui.layedit;
         laydate = layui.laydate;
+
+        //接收参数
+        var dataId = GetQueryString("dataId");
+        getOne(dataId);
 
         //监听提交
         form.on('submit(knowledge-submit)', function (data) {
@@ -69,17 +75,14 @@
 
     function getOne(id) {
         $.ajax({
-            url: "/knowledge/save",
+            url: "/knowledge/getOne",
             dataType: "json",
             type: "post",
             //async: "true/false",是否异步
-            data: data,
+            data: {id : id},
             success: function (res) {
-                if (res != null && res.code == 0) {
-                    layer.msg("保存成功");
-                }else{
-                    layer.msg("保存失败");
-                }
+                form.val("layuiadmin-form-order", res.data);
+                form.render('select');
             },
             error: function () {
             }
