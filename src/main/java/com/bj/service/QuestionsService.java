@@ -11,6 +11,15 @@ public interface QuestionsService {
      * @param pageable
      * @return
      */
-    Page<Questions> list(Pageable pageable);
+    Page<Questions> list(Questions model, Pageable pageable);
+    /**
+     * 保存
+     *
+     * @param model
+     */
+    Questions save(Questions model);
 
+    Questions getOne(Integer id);
+
+    void deleteById(Integer id);
 }

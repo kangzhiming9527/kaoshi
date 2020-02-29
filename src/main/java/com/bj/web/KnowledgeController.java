@@ -29,15 +29,15 @@ public class KnowledgeController extends BaseController {
      */
     @RequestMapping("/list")
     public String list(HttpServletResponse response,
+                       Knowledge model,
                        @RequestParam(value = "page", defaultValue = "1", required = false) Integer pageNum,
                        @RequestParam(value = "limit", defaultValue = "10", required = false) Integer limit) {
-
         try {
             int start = (pageNum - 1) * limit;
 
             Sort sort = new Sort(Sort.DEFAULT_DIRECTION, "id");
             Pageable pageable = PageRequest.of(start, limit, sort);
-            Page<Knowledge> page = service.list(pageable);
+            Page<Knowledge> page = service.list(model,pageable);
             sendJsonData(response, "0", "", page.getTotalElements(), page.getContent());
         } catch (Exception e) {
             sendJsonData(response, "-1", "", 0, null);
@@ -49,7 +49,7 @@ public class KnowledgeController extends BaseController {
 
 
     /**
-     * 类别新增操作
+     * 保存操作
      *
      * @param model
      * @return

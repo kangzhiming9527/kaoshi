@@ -90,13 +90,13 @@ console.log(field);
                     , title: '修改知识点'
                     , content: 'edit.html?dataId='+data.id
                     , maxmin: true
-                    , area: ['550px', '350px']
+                    , area: ['460px', '390px']
                     , btn: ['确定', '取消']
                     , yes: function (index, layero) {
                         //点击确认触发 iframe 内容中的按钮提交
                         var submit = layero.find('iframe').contents().find("#LAY-app-knowledge-submit");
                         submit.click();
-                        queryList();
+                        setTimeout(' queryList()',100);
                         layer.close(index);
                     }
                 });
@@ -120,13 +120,13 @@ console.log(field);
                     , title: '添加知识点'
                     , content: 'add.html'
                     , maxmin: true
-                    , area: ['550px', '350px']
+                    , area: ['460px', '390px']
                     , btn: ['确定', '取消']
                     , yes: function (index, layero) {
                         //点击确认触发 iframe 内容中的按钮提交
                         var submit = layero.find('iframe').contents().find("#LAY-app-knowledge-submit");
                         submit.click();
-                        queryList();
+                        setTimeout(' queryList()',100);
                         layer.close(index);
                     }
                 });

@@ -1,47 +1,185 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>题库</title>
+    <meta charset="utf-8">
+    <title>layuiAdmin 内容系统 - 文章列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all">
+    <!--<link rel="stylesheet" href="../../style/admin.css" media="all">-->
 </head>
 <body>
-<a th:if="${page.totalPages==0}" th:href="@{/person/add}">新增</a>
-<table>
-    <tr>
-        <th>编号</th>
-        <th>年级</th>
-        <th>学期</th>
-        <th>知识分类</th>
-        <th>问题</th>
-        <th>正确次数</th>
-        <!--<th>辈分</th>-->
-        <th>错误次数</th>
-        <th>操&nbsp;&nbsp;作</th>
-    </tr>
-    <!--不分页遍历-->
-    <!--<tr th:each="item : ${list}">-->
-    <!--分页遍历-->
-    <tr th:each="item : ${page.content}">
-        <td th:text="${item.id}">编号</td>
-        <td th:text="${item.type1}">年级</td>
-        <td th:text="${item.type2}">学期</td>
-        <!--<td th:text="${#dates.format(item.birthday, 'yyyy-MM-dd')}">知识分类</td>-->
-        <td th:text="${item.content}">问题</td>
-        <td th:text="${item.knowledge}">知识分类</td>
-        <td th:text="${item.rightCount}">正确次数</td>
-        <!--<td th:text="${item.id}">辈分</td>-->
-        <td th:text="${item.wrongCount}">错误次数</td>
-        <td>
-            <!--<a th:href="@{/categoryedit(id=${item.id})}">编辑</a>&nbsp;&nbsp;-->
-            <!--<a th:href="@{/categorydelete(id=${item.id})}">删除</a>-->
-        </td>
-    </tr>
-</table>
-<div>
-    <a th:href="@{/person/list(start=0)}">[首页]</a>&nbsp;&nbsp;
-    <a th:if="${not page.isFirst()}" th:href="@{/person/list(start=${page.number-1})}">[上页]</a>&nbsp;&nbsp;
-    <a th:if="${not page.isLast()}" th:href="@{/person/list(start=${page.number+1})}">[下页]</a>&nbsp;&nbsp;
-    <a th:href="@{/person/list(start=${page.totalPages-1})}">[末页]</a>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">科目</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<select name="type0">-->
+                            <!--<option value="">全部</option>-->
+                            <!--<option value="0">数学</option>-->
+                            <!--&lt;!&ndash;<option value="1">语文</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="2">英语</option>&ndash;&gt;-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">问题</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="content" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">分类</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="type2" placeholder="请输入" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+            </div>
+            <table id="knowledgeList" lay-filter="dataTableFilter"></table>
+            <script type="text/html" id="barOperation">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i
+                        class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
 </div>
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery-1.9.1.min.js"></script>
+<script>
+    var table;
+    var form;
+    layui.use(['form', 'layer', 'table'], function () {
+        table = layui.table;
+        form = layui.form;
+
+        //监听搜索
+        form.on('submit(LAY-app-contlist-search)', function (data) {
+            var field = data.field;
+            console.log(field);
+            //执行重载
+            table.reload('knowledgeList', {
+                where: field
+            });
+        });
+
+        //监听工具条
+        table.on('tool(dataTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                layer.open({
+                    type: 2
+                    , title: '修改试题'
+                    , content: 'edit.html?pageType=edit&dataId=' + data.id
+                    , maxmin: true
+                    , area: ['550px', '350px']
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#LAY-app-questions-submit");
+                        submit.click();
+                        setTimeout(' queryList()',100);
+                        layer.close(index);
+                    }
+                });
+                // parent.showWindows("查看出库单", "inpOutStore/outStoreInfo.jsp?outStoreLogID=" + data.outStoreLogID, "1064px", "756px");
+            } else if (obj.event === 'del') {
+                layer.confirm('您确定删除该条数据么!', {
+                    btn: ['确定', '取消'],
+                    yes: function (index) {
+                        del(data.id);
+                        queryList();
+                        layer.close(index);
+                    }
+                });
+            }
+        });
+
+        var $ = layui.$, active = {
+            add: function () {
+                layer.open({
+                    type: 2
+                    , title: '添加试题'
+                    , content: 'edit.html?pageType=add'
+                    , maxmin: true
+                    , area: ['550px', '450px']
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#LAY-app-questions-submit");
+                        submit.click();
+                        setTimeout(' queryList()',100);
+                        layer.close(index);
+                    }
+                });
+            }
+        };
+
+        $('.layui-btn.layuiadmin-btn-list').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        queryList();
+    });
+
+    function queryList() {
+        table.render({
+            elem: '#knowledgeList'
+            , url: '/questions/list'
+            , cols: [[
+                {field: 'id', title: '编号', type: 'numbers'}
+                // , {
+                //     field: 'knowledge', title: '知识分类', templet: function (d) {
+                //         console.log(d);
+                //         return d.knowledge.type2
+                //     }
+                // }
+                , {field: 'content', title: '问题', sort: true}
+                , {field: 'right', title: '正确答案', sort: true}
+                , {toolbar: '#barOperation', title: '操作'}
+            ]]
+            , page: true
+        });
+    }
+
+    function del(id) {
+        $.ajax({
+            url: "/questions/deleteById",
+            dataType: "json",
+            type: "post",
+            //async: "true/false",是否异步
+            data: {id: id},
+            success: function (res) {
+                if (res != null && res.code == 0) {
+                    queryList();
+                    layer.msg("删除成功");
+                } else {
+                    layer.msg("删除失败");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
 </body>
+
 </html>

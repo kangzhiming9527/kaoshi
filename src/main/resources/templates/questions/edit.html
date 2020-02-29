@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>编辑知识点</title>
+    <title>编辑试题</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -15,54 +15,52 @@
     <form>
         <input name="id" type="hidden">
         <div class="layui-form-item">
-            <label class="layui-form-label">学校</label>
+            <label class="layui-form-label">知识点</label>
             <div class="layui-input-inline">
-                <select name="school">
+                <select name="knowledge" lay-filter="knowledge">
                     <option value="0">小学</option>
-                    <!--<option value="1">语文</option>-->
-                    <!--<option value="2">英语</option>-->
+                    <option value="1">初中</option>
+                    <option value="2">高中</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">年级</label>
+            <label class="layui-form-label">问题</label>
             <div class="layui-input-inline">
-                <select name="grade">
-                    <option value="0">一年级</option>
-                    <option value="1">二年级</option>
-                    <option value="2">三年级</option>
-                    <option value="3">四年级</option>
-                    <option value="4">五年级</option>
-                    <option value="5">六年级</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">科目</label>
-            <div class="layui-input-inline">
-                <select name="type0">
-                    <option value="0">数学</option>
-                    <!--<option value="1">语文</option>-->
-                    <!--<option value="2">英语</option>-->
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">类别</label>
-            <div class="layui-input-inline">
-                <input type="text" name="type1" lay-verify="required" placeholder="知识点类别" autocomplete="off"
+                <input type="text" name="content" lay-verify="required" placeholder="知识点分类" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">分类</label>
+            <label class="layui-form-label">正确答案</label>
             <div class="layui-input-inline">
-                <input type="text" name="type2" lay-verify="required" placeholder="知识点分类" autocomplete="off"
+                <input type="text" name="right" lay-verify="required" placeholder="知识点分类" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">错误答案1</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wrong1" lay-verify="required" placeholder="知识点分类" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">错误答案2</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wrong2" lay-verify="required" placeholder="知识点分类" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">错误答案3</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wrong3" lay-verify="required" placeholder="知识点分类" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-hide">
-            <input type="button" lay-submit lay-filter="knowledge-submit" id="LAY-app-knowledge-submit"
+            <input type="button" lay-submit lay-filter="questions-submit" id="LAY-app-questions-submit"
                    value="确认">
         </div>
     </form>
@@ -83,11 +81,14 @@
         laydate = layui.laydate;
 
         //接收参数
+        var pageType = GetQueryString("pageType");
         var dataId = GetQueryString("dataId");
-        getOne(dataId);
+        if(pageType == 'edit'){
+            getOne(dataId);
+        }
 
         //监听提交
-        form.on('submit(knowledge-submit)', function (data) {
+        form.on('submit(questions-submit)', function (data) {
             // layer.alert(JSON.stringify(data.field), {
             //     title: '最终的提交信息'
             // })
@@ -98,7 +99,7 @@
 
     function getOne(id) {
         $.ajax({
-            url: "/knowledge/getOne",
+            url: "/questions/getOne",
             dataType: "json",
             type: "post",
             //async: "true/false",是否异步
@@ -113,7 +114,7 @@
     }
     function save(data) {
         $.ajax({
-            url: "/knowledge/save",
+            url: "/questions/save",
             dataType: "json",
             type: "post",
             //async: "true/false",是否异步

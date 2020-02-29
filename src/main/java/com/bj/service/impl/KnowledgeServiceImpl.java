@@ -4,6 +4,8 @@ import com.bj.bean.Knowledge;
 import com.bj.dao.KnowledgeDao;
 import com.bj.service.KnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,25 @@ public class KnowledgeServiceImpl implements KnowledgeService {
     /**
      * 列表查询
      *
+     *
+     * @param model
      * @param pageable
      * @return
      */
     @Override
-    public Page<Knowledge> list(Pageable pageable) {
-        return dao.findAll(pageable);
+    public Page<Knowledge> list(Knowledge model, Pageable pageable) {
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//                .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.startsWith())//模糊查询匹配开头，即{username}%
+//                .withMatcher("address" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
+//                .withIgnorePaths("password");//忽略字段，即不管password是什么值都不加入查询条件
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withMatcher("type1", ExampleMatcher.GenericPropertyMatchers.contains())//模糊查询匹配开头，即{username}%
+                .withMatcher("type2" ,ExampleMatcher.GenericPropertyMatchers.contains())//全部模糊查询，即%{address}%
+                .withIgnorePaths("creationTime")
+                .withIgnorePaths("updateTime")
+                .withIgnorePaths("id");//忽略字段，即不管password是什么值都不加入查询条件
+        Example<Knowledge> ex = Example.of(model,matcher); //动态查询
+        return dao.findAll(ex,pageable);
     }
 
     /**

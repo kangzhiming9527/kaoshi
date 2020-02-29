@@ -29,9 +29,15 @@ public class Knowledge extends BaseBean {
     @Column(name = "id")
     private Integer id;
 
+    //年级 0 小学 1 初中 2 高中
+    @Column(name = "school")
+    private Integer school;
+    @Column(name = "grade")
+    private Integer grade;
+
     //科目    0 数学 1 语文 2 英语
     @Column(name = "type0")
-    private int type0;
+    private Integer type0;
 
     //知识点分类1
     @Column(name = "type1")
@@ -41,7 +47,23 @@ public class Knowledge extends BaseBean {
     @Column(name = "type2")
     private String type2;
 
-    public int getType0() {
+    public Integer getSchool() {
+        return school;
+    }
+
+    public void setSchool(Integer school) {
+        this.school = school;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public Integer getType0() {
         return type0;
     }
 
@@ -63,7 +85,7 @@ public class Knowledge extends BaseBean {
         return str;
     }
 
-    public void setType0(int type0) {
+    public void setType0(Integer type0) {
         this.type0 = type0;
     }
 

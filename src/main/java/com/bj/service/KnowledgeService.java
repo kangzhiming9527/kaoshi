@@ -13,10 +13,12 @@ public interface KnowledgeService {
     /**
      * 列表查询
      *
+     *
+     * @param model
      * @param pageable
      * @return
      */
-    Page<Knowledge> list(Pageable pageable);
+    Page<Knowledge> list(Knowledge model, Pageable pageable);
 
     /**
      * 保存

@@ -16,13 +16,8 @@ public class Questions extends BaseBean {
     @Column(name = "id")
     private Integer id;
 
-    //年级
-    @Column(name = "type1")
-    private int type1 = 0;
-    //学期    0上学期 1 下学期
-    @Column(name = "type2")
-    private int type2 = 0;
     //知识分类
+//    @ManyToOne(targetEntity = Knowledge.class, fetch = FetchType.EAGER)
     @ManyToOne(targetEntity = Knowledge.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "k_id", referencedColumnName = "id")
 //     @JsonIgnore
@@ -46,10 +41,10 @@ public class Questions extends BaseBean {
 
     //正确次数
     @Column(name = "right_count")
-    private int rightCount;
+    private Integer rightCount;
     //错误次数
     @Column(name = "wrong_count")
-    private int wrongCount;
+    private Integer wrongCount;
 
     public Integer getId() {
         return id;
@@ -57,22 +52,6 @@ public class Questions extends BaseBean {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getType1() {
-        return type1;
-    }
-
-    public void setType1(int type1) {
-        this.type1 = type1;
-    }
-
-    public int getType2() {
-        return type2;
-    }
-
-    public void setType2(int type2) {
-        this.type2 = type2;
     }
 
     public Knowledge getKnowledge() {
@@ -123,19 +102,19 @@ public class Questions extends BaseBean {
         this.wrong3 = wrong3;
     }
 
-    public int getRightCount() {
+    public Integer getRightCount() {
         return rightCount;
     }
 
-    public void setRightCount(int rightCount) {
+    public void setRightCount(Integer rightCount) {
         this.rightCount = rightCount;
     }
 
-    public int getWrongCount() {
+    public Integer getWrongCount() {
         return wrongCount;
     }
 
-    public void setWrongCount(int wrongCount) {
+    public void setWrongCount(Integer wrongCount) {
         this.wrongCount = wrongCount;
     }
 }
