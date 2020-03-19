@@ -130,6 +130,24 @@
             }
         });
     }
+    function getKnowledgeType2() {
+        $.ajax({
+            url: "/questions/save",
+            dataType: "json",
+            type: "post",
+            //async: "true/false",是否异步
+            data: data,
+            success: function (res) {
+                if (res != null && res.code == 0) {
+                    layer.msg("保存成功");
+                }else{
+                    layer.msg("保存失败");
+                }
+            },
+            error: function () {
+            }
+        });
+    }
 
 </script>
 </body>

@@ -97,6 +97,10 @@ public class Questions extends BaseBean {
     public String getWrong3() {
         return wrong3;
     }
+    //知识点 分类名称
+    public String getKnowledgeStr() {
+        return knowledge.getType2();
+    }
 
     public void setWrong3(String wrong3) {
         this.wrong3 = wrong3;

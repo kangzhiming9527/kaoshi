@@ -146,12 +146,12 @@
             , url: '/questions/list'
             , cols: [[
                 {field: 'id', title: '编号', type: 'numbers'}
-                // , {
-                //     field: 'knowledge', title: '知识分类', templet: function (d) {
-                //         console.log(d);
-                //         return d.knowledge.type2
-                //     }
-                // }
+                , {
+                    field: 'knowledgeStr', title: '知识分类', templet: function (d) {
+                        console.log(d);
+                        return d.knowledgeStr
+                    }
+                }
                 , {field: 'content', title: '问题', sort: true}
                 , {field: 'right', title: '正确答案', sort: true}
                 , {toolbar: '#barOperation', title: '操作'}

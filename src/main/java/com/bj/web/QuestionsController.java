@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 @RequestMapping("/questions")
@@ -37,6 +38,7 @@ public class QuestionsController extends BaseController{
             Sort sort = new Sort(Sort.DEFAULT_DIRECTION, "id");
             Pageable pageable = PageRequest.of(start, limit, sort);
             Page<Questions> page = service.list(model,pageable);
+            List<Questions> content = page.getContent();
             sendJsonData(response, "0", "", page.getTotalElements(), page.getContent());
         } catch (Exception e) {
             sendJsonData(response, "-1", "", 0, null);

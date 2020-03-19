@@ -112,4 +112,16 @@ public class Knowledge extends BaseBean {
     public void setType2(String type2) {
         this.type2 = type2;
     }
+
+    @Override
+    public String toString() {
+        return "Knowledge{" +
+                "id=" + id +
+                ", school=" + school +
+                ", grade=" + grade +
+                ", type0=" + type0 +
+                ", type1='" + type1 + '\'' +
+                ", type2='" + type2 + '\'' +
+                '}';
+    }
 }
