@@ -46,6 +46,9 @@ public class Questions extends BaseBean {
     @Column(name = "wrong_count")
     private Integer wrongCount;
 
+    @Transient
+    private double prob;    //出题概率
+
     public Integer getId() {
         return id;
     }
@@ -120,5 +123,13 @@ public class Questions extends BaseBean {
 
     public void setWrongCount(Integer wrongCount) {
         this.wrongCount = wrongCount;
+    }
+
+    public double getProb() {
+        return prob;
+    }
+
+    public void setProb(double prob) {
+        this.prob = prob;
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/knowledge")
@@ -99,6 +101,37 @@ public class KnowledgeController extends BaseController {
         try {
             Knowledge model = service.getOne(id);
             sendJsonResult(response, "0", model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取知识点1清单
+     * @param response
+     * @return
+     */
+    @RequestMapping("/getKnowledgeType1")
+    public String getKnowledgeType1(HttpServletResponse response) {
+        try {
+            List<String> list = service.type1List();
+            sendJsonResult(response, "0", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     * 获取知识点2清单
+     * @param response
+     * @return
+     */
+    @RequestMapping("/getKnowledgeType2")
+    public String getKnowledgeType2(HttpServletResponse response,String type1) {
+        try {
+            List<Map<String, Object>> list = service.type2List(type1);
+            sendJsonResult(response, "0", list);
         } catch (Exception e) {
             e.printStackTrace();
         }

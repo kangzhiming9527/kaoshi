@@ -1,0 +1,204 @@
+.mobile_bg{
+	height: 100%;
+	width: 100%;
+	background-image: url(../images/mobile-bg.png);
+	background-position: top;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.wrapper{
+	padding:0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	overflow: hidden;
+}
+.wrapper .panel_block{
+	margin: 20px 15px 0;
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 25px 10px;
+	border-radius: 8px;
+	background: #FFF;
+	box-shadow: 0 2px 10px 0 rgba(58,62,81,0.20);
+}
+.wrapper .panel_block .icon_logo{
+	margin-bottom: 20px;
+}
+.wrapper .panel_block .icon_logo img{
+	width: 40px;
+}
+.wrapper .panel_block .title{
+	font-size: 16px;
+	line-height: 21px;
+	margin-bottom: 15px;
+	font-weight: 400;
+	color: #27274A;
+	padding: 0 10px;
+}
+.wrapper .panel_block .btn_row{
+	margin-top: 20px;
+}
+.bg_blue{
+	background-color: #1A8CFE;
+	color: #FFFFFF;
+}
+.b_blue {
+    color: #1A8CFE;
+    border: 1px solid #1A8CFE!important;
+}
+.btn_size{
+	width: 120px !important;
+	line-height: 40px;
+	height: 40px;
+	border-radius: 20px;
+}
+.main{
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	min-height: 100%;
+	background: #eff3f7;
+}
+.body_wrapper{
+	padding: 0 10px 65px 10px;
+	height: 100%;
+	overflow-y: scroll;
+}
+.scroll_wrapper{
+	margin-left: -10px;
+	margin-right: -10px;
+	overflow: hidden;
+}
+.scroll_wrapper .scroll_content{
+	padding: 0 10px;
+	overflow: auto;
+}
+.scroll_wrapper .scroll_content .title {
+    margin-left: -10px;
+    margin-right: -10px;
+    background: #fff;
+    position: relative;
+    padding: 10px;
+    padding-right: 40px;
+}
+.scroll_wrapper .scroll_content .title .exam_title{
+	font-size: 14px;
+	line-height: 24px;
+}
+.scroll_wrapper .scroll_content .title .exam_num {
+    font-size: 14px;
+    color: #C1C1CB;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+.scroll_wrapper .scroll_content .title .exam_num span:first-child {
+    color: #1A8CFE;
+}
+.scroll_wrapper .scroll_content .process_split {
+    height: 3px;
+    background: #E6E6E6;
+    position: relative;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
+}
+.scroll_wrapper .scroll_content .process_split .has_commit {
+    background: #1A8CFE;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.question_content .drag_block{
+	height: auto!important;
+	position: relative;
+}
+.question_content .drag_block .question_main{
+	position: relative;
+	padding-bottom: 44px;
+	background: #FFFFFF;
+	border-radius: 4px;
+	padding: 20px;
+}
+.question_content .drag_block .question_main .exam_question{
+	color: #27274A;
+	font-size: 14px;
+}
+.ques_img{
+	max-height: 250px;
+	max-width: 100%;
+	text-align: center;
+	width: auto;
+	display: inline;
+	pointer-events: none;
+	vertical-align: sub;
+}
+.single_select {
+    min-height: 22px;
+}
+.question_content .drag_block .question_main .answers{
+	padding-top: 25px;
+}
+.question_content .drag_block .question_main .answers .single_select + .single_select{
+	margin-top: 20px;
+	min-height: 20px;
+}
+.question_content .drag_block .question_main .answers label {
+    display: block;
+    font-size: 14px;
+    color: #656577;
+    position: relative;
+    margin: 0;
+    padding-left: 30px;
+}
+.question_content .drag_block .question_main .answers label .icon_k {
+    border: 1px solid #656577;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    position: absolute;
+    left: 0;
+    text-align: center;
+	border-radius: 50%;
+}
+.question_content .drag_block .question_main .answers .radioOrCheck:checked + label {
+    color: #1A8CFE;
+}
+.question_content .drag_block .question_main .answers .radioOrCheck:checked + label .icon_k {
+    color: #fff;
+    border-color: #1A8CFE;
+    background: #1A8CFE;
+}
+.nav_wrapper {
+	position: absolute;
+    background-color: #EEF3F8;
+    width: 100%;
+    bottom: 0;
+    z-index: 999;
+}
+.weui-btn{
+	height: 44px;
+	line-height: 44px;
+	font-size: 14px;
+}
+.weui-cell_access:active{
+	background-color:#EEF3F8;
+}
+.weui-cells__title{
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-size: 16px;
+}
+.weui-form-li{
+	margin: 16px 0px;
+}
+.weui-form label{
+	width: 100%;
+}
+.weui-form-checkbox[type="radio"]:checked + label .weui-icon-radio{
+	background-color: #1A8CFE;
+	border: 1px solid #1A8CFE;
+}

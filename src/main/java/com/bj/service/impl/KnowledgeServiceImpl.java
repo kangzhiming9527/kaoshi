@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * KnowledgeServiceImpl：
  * 2020/2/23 20:40
@@ -43,6 +46,28 @@ public class KnowledgeServiceImpl implements KnowledgeService {
         Example<Knowledge> ex = Example.of(model,matcher); //动态查询
         return dao.findAll(ex,pageable);
     }
+
+    /**
+     * 获取知识点1清单
+     *
+     * @return
+     */
+    @Override
+    public List<String> type1List() {
+        return dao.type1List();
+    }
+
+    /**
+     * 获取知识点2清单
+     *
+     * @param type1
+     * @return
+     */
+    @Override
+    public List<Map<String,Object>> type2List(String type1) {
+        return dao.type2List(type1);
+    }
+
 
     /**
      * 保存
