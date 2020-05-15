@@ -2,6 +2,7 @@ package com.bj.web;
 
 import com.alibaba.fastjson.JSONArray;
 import com.bj.bean.Teacher;
+import com.bj.bean.TreeNode;
 import com.bj.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -114,8 +115,8 @@ public class TeacherController extends BaseController{
     @RequestMapping("/studentTree")
     public String studentTree(HttpServletResponse response, Integer tid) {
         try {
-            JSONArray array = service.studentTree(tid);
-            sendJsonResult(response, "0", array);
+            List<TreeNode> tree= service.studentTree(tid);
+            sendJsonResult(response, "0", tree);
         } catch (Exception e) {
             e.printStackTrace();
         }

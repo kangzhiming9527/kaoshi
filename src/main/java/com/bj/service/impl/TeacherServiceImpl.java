@@ -1,12 +1,12 @@
 package com.bj.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.bj.bean.Student;
 import com.bj.bean.Teacher;
+import com.bj.bean.TreeNode;
 import com.bj.dao.StudentDao;
 import com.bj.dao.TeacherDao;
 import com.bj.service.TeacherService;
+import com.bj.util.EntityUtils;
+import com.bj.util.TreeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * TeacherServiceImpl：
@@ -59,9 +60,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public JSONArray studentTree(Integer tid) {
-        List<Student> students = studentDao.findAll();
+    public List<TreeNode>  studentTree(Integer tid) {
+//        List<Object[]> objects = studentDao.studentTree();
+//        List<TreeNode> list = EntityUtils.castEntity(objects, TreeNode.class);
+        List<Map<String,Object>> list = studentDao.studentTree();
+        System.out.println(list);
+//        List<TreeNode> tree = TreeUtil.listGetStree(list);
        //写递归形成学生树
+//        return tree;
         return null;
     }
 

@@ -11,47 +11,76 @@
 </head>
 <body>
 
-<div id="test7" class="demo-tree"></div>
+<div id="demo1"></div>
 <script src="../../layui/layui.js"></script>
 <script src="../../js/jquery-1.9.1.min.js"></script>
+<script src="../../js/util/xm-select.js"></script>
 <script>
     layui.use(['tree', 'util'], function () {
-        var tree = layui.tree
-            , layer = layui.layer
-            , util = layui.util
-            //模拟数据2
-            ,
-            data2 = [{title: '早餐', id: 1, children: [{title: '油条', id: 5}, {title: '包子', id: 6}, {title: '豆浆', id: 7}]},
-                {
-                    title: '午餐',
-                    id: 2,
-                    checked: true,
-                    children: [{title: '藜蒿炒腊肉', id: 8}, {title: '西湖醋鱼', id: 9}, {title: '小白菜', id: 10}, {
-                        title: '海带排骨汤',
-                        id: 11
-                    }]
-                },
-                {
-                    title: '晚餐',
-                    id: 3,
-                    children: [{title: '红烧肉', id: 12, fixed: true}, {title: '番茄炒蛋', id: 13}]
-                }, {
-                    title: '夜宵',
-                    id: 4,
-                    children: [{title: '小龙虾', id: 14, checked: true}, {
-                        title: '香辣蟹',
-                        id: 15,
-                        disabled: true
-                    }, {title: '烤鱿鱼', id: 16}]
-                }];
+        // var tree = layui.tree
+        //     , layer = layui.layer
+        //     , util = layui.util
+        //     //模拟数据2
+        //     ,
+        //     data2 = [{title: '早餐', id: 1, children: [{title: '油条', id: 5}, {title: '包子', id: 6}, {title: '豆浆', id: 7}]},
+        //         {
+        //             title: '午餐',
+        //             id: 2,
+        //             checked: true,
+        //             children: [{title: '藜蒿炒腊肉', id: 8}, {title: '西湖醋鱼', id: 9}, {title: '小白菜', id: 10}, {
+        //                 title: '海带排骨汤',
+        //                 id: 11
+        //             }]
+        //         },
+        //         {
+        //             title: '晚餐',
+        //             id: 3,
+        //             children: [{title: '红烧肉', id: 12, fixed: true}, {title: '番茄炒蛋', id: 13}]
+        //         }, {
+        //             title: '夜宵',
+        //             id: 4,
+        //             children: [{title: '小龙虾', id: 14, checked: true}, {
+        //                 title: '香辣蟹',
+        //                 id: 15,
+        //                 disabled: true
+        //             }, {title: '烤鱿鱼', id: 16}]
+        //         }];
+        //
+        // //开启复选框
+        // tree.render({
+        //     elem: '#test7'
+        //     , data: data2
+        //     , showCheckbox: true
+        // });
 
-        //开启复选框
-        tree.render({
-            elem: '#test7'
-            , data: data2
-            , showCheckbox: true
-        });
+        getStudentTree();
+
     });
+
+    var demo1 = xmSelect.render({
+        el: '#demo1',
+        data: [
+            {name: '张三', value: 1},
+            {name: '李四', value: 2},
+            {name: '王五', value: 3},
+        ]
+    })
+    function getStudentTree() {
+        $.ajax({
+            url: "/teacher/studentTree",
+            dataType: "json",
+            type: "post",
+            //async: "true/false",是否异步
+            success: function (res) {
+                console.log(res);
+                // form.val("layuiadmin-form-order", res.data);
+                // // $('#type2').val(res.data.knowledge.id);
+                // form.render('select');
+            },
+            error: function () {
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+使用手册
+https://maplemei.gitee.io/xm-select/#/component/install
+
+第一步: 引入 xm-select.js
+第二步:写一个`<div id="demo1"></div>`
+第三步: 渲染
+
+注：渲染要放在第二步代码后
+
+示例代码
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--第一步-->
+		<script type="text/javascript" src="js/xm-select.js" ></script>
+	</head>
+	<body>
+		<!--第二步-->
+		<div id="demo1" class="xm-select-demo"></div>
+
+<script>
+	<!--第三步-->
+var demo1 = xmSelect.render({
+	el: '#demo1',
+	data: [
+		{name: '张三', value: 1},
+		{name: '李四', value: 2},
+		{name: '王五', value: 3},
+	]
+})
+</script>
+	</body>
+</html>
+
